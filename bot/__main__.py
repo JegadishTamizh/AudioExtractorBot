@@ -137,7 +137,7 @@ def extractAudio(_, message):
             progress_args=(infoMessage,),
         )
         resultFile = f"{message.from_user.id}-{message.message_id}"
-        spawn(f"ffmpeg -i {filePath} -f mp3 -ab 192000 -vn -loglevel quiet ./extracted/{resultFile}.mp3")
+        spawn(f"ffmpeg -i {filePath} -map 0:a:0 -c copy ./extracted/{resultFile}.mka")
         if not path.exists(f"./extracted/{resultFile}.mp3"):
             return app.send_message(message.chat.id, "Couldn't Extract The Audio From This File. Sorry!")
         fileSize = getFileSize(f"./extracted/{resultFile}.mp3")
